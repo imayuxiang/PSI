@@ -38,5 +38,10 @@ while len(emails) < N:
 # sort list of emails
 emails_list = list(emails)
 # emails_list.sort()
+output_file0 = "player0.txt"
+output_file1 = "player1.txt"
+file0 = open(output_file1, 'w')
 for e in emails_list:
      print e
+     file0.write(e + '\n')
+file0.close()

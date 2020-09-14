@@ -22,14 +22,14 @@ MIRACL_MAKE:=linux
 GNU_LIB_PATH:=i386
 endif
 
-INCLUDE=-I..  -I/usr/include/glib-2.0/ -I/usr/lib/${GNU_LIB_PATH}-linux-gnu/glib-2.0/include `pkg-config --cflags glib-2.0`
+INCLUDE=-I.. -I/usr/local/Cellar/glib/2.64.4_2/include/glib-2.0  -I/usr/local/opt/glib/lib/glib-2.0/include -I/usr/local/Cellar/openssl/1.0.2t/include/openssl
 
 
-LIBRARIES=-lgmp -lgmpxx -lpthread  -L /usr/lib  -lssl -lcrypto -lglib-2.0 `pkg-config --libs glib-2.0`
+LIBRARIES=-lgmp -lgmpxx -lpthread  -L /usr/lib  -lssl -lcrypto -lglib-2.0 -L/usr/local/Cellar/glib/2.64.4_2/lib   -L/usr/local/Cellar/openssl/1.0.2t/lib
 CFLAGS=
 
 # all source files and corresponding object files 
-SOURCES_CORE := $(shell find ${CORE} -type f -name '*.cpp' -not -path '*/Miracl/*' -a -not -path '*/mains/*')
+SOURCES_CORE := $(shell find ${SRC} -type f -name '*.cpp' -not -path '*/Miracl/*' -a -not -path '*/mains/*')
 OBJECTS_CORE := $(SOURCES_CORE:.cpp=.o)
 # directory for PSI related sources
 SOURCES_UTIL=${SRC}/util/*.cpp
@@ -52,6 +52,9 @@ OBJECTS_SERVERAIDED=${SRC}/server-aided/*.o
 # OT-based PSI
 SOURCES_OTPSI=${SRC}/ot-based/*.cpp
 OBJECTS_OTPSI=${SRC}/ot-based/*.o
+# BEE-OT-based PSI
+SOURCES_BEEOTPSI=${SRC}/bee_psi/*.cpp
+OBJECTS_BEEOTPSI=${SRC}/bee_psi/*.o
 #OBJECTS_BENCH=${SRC}/bench_psi.cpp
 # directory for the Miracl submodule and library
 MIRACL_LIB_DIR=${EXT}/miracl_lib
@@ -70,13 +73,13 @@ core: ${OBJECTS_CORE}
 	${CC} $< ${COMPILER_OPTIONS} ${DEBUG_OPTIONS} -c ${INCLUDE} ${LIBRARIES} ${CFLAGS} ${BATCH} -o $@
 
 bench:  
-	${CC} -o psi.exe ${SRC}/mains/bench_psi.cpp ${OBJECTS_DHPSI} ${OBJECTS_OTPSI} ${OBJECTS_NAIVE} ${OBJECTS_SERVERAIDED} ${OBJECTS_UTIL} ${OBJECTS_HASHING} ${OBJECTS_CRYPTO} ${OBJECTS_OT} ${OBJECTS_MIRACL} ${CFLAGS} ${DEBUG_OPTIONS} ${LIBRARIES} ${MIRACL_LIB} ${INCLUDE} ${COMPILER_OPTIONS}
+	${CC} -o psi.exe ${SRC}/mains/bench_psi.cpp ${OBJECTS_DHPSI} ${OBJECTS_BEEOTPSI} ${OBJECTS_OTPSI} ${OBJECTS_NAIVE} ${OBJECTS_SERVERAIDED} ${OBJECTS_UTIL} ${OBJECTS_HASHING} ${OBJECTS_CRYPTO} ${OBJECTS_OT} ${OBJECTS_MIRACL} ${CFLAGS} ${DEBUG_OPTIONS} ${LIBRARIES} ${MIRACL_LIB} ${INCLUDE} ${COMPILER_OPTIONS}
 
 demo:  
-	${CC} -o demo.exe ${SRC}/mains/psi_demo.cpp ${OBJECTS_DHPSI} ${OBJECTS_OTPSI} ${OBJECTS_NAIVE} ${OBJECTS_SERVERAIDED} ${OBJECTS_UTIL} ${OBJECTS_HASHING} ${OBJECTS_CRYPTO} ${OBJECTS_OT} ${OBJECTS_MIRACL} ${CFLAGS} ${DEBUG_OPTIONS} ${LIBRARIES} ${MIRACL_LIB} ${INCLUDE} ${COMPILER_OPTIONS}
+	${CC} -o demo.exe ${SRC}/mains/psi_demo.cpp ${OBJECTS_DHPSI} ${OBJECTS_BEEOTPSI} ${OBJECTS_OTPSI} ${OBJECTS_NAIVE} ${OBJECTS_SERVERAIDED} ${OBJECTS_UTIL} ${OBJECTS_HASHING} ${OBJECTS_CRYPTO} ${OBJECTS_OT} ${OBJECTS_MIRACL} ${CFLAGS} ${DEBUG_OPTIONS} ${LIBRARIES} ${MIRACL_LIB} ${INCLUDE} ${COMPILER_OPTIONS}
 
 test: core
-	${CC} -o test.exe ${SRC}/mains/test_psi.cpp ${OBJECTS_DHPSI} ${OBJECTS_OTPSI} ${OBJECTS_NAIVE} ${OBJECTS_SERVERAIDED} ${OBJECTS_UTIL} ${OBJECTS_HASHING} ${OBJECTS_CRYPTO} ${OBJECTS_OT} ${OBJECTS_MIRACL} ${CFLAGS} ${DEBUG_OPTIONS} ${LIBRARIES} ${MIRACL_LIB} ${INCLUDE} ${COMPILER_OPTIONS} 
+	${CC} -o test.exe ${SRC}/mains/test_psi.cpp ${OBJECTS_DHPSI} ${OBJECTS_BEEOTPSI} ${OBJECTS_OTPSI} ${OBJECTS_NAIVE} ${OBJECTS_SERVERAIDED} ${OBJECTS_UTIL} ${OBJECTS_HASHING} ${OBJECTS_CRYPTO} ${OBJECTS_OT} ${OBJECTS_MIRACL} ${CFLAGS} ${DEBUG_OPTIONS} ${LIBRARIES} ${MIRACL_LIB} ${INCLUDE} ${COMPILER_OPTIONS} 
 	./test.exe -r 0 -t 10 & 
 	./test.exe -r 1 -t 10
 

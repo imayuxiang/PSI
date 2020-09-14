@@ -1,0 +1,4 @@
+/Users/imayuxiang/projects/PSI/cmake-build-debug/CMakeFiles/demo.exe.dir
+/Users/imayuxiang/projects/PSI/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/imayuxiang/projects/PSI/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/imayuxiang/projects/PSI/cmake-build-debug/CMakeFiles/psi.exe.dir

@@ -19,9 +19,9 @@
 #include <algorithm>
 #include "../util/helpers.h"
 
-static bool DETAILED_TIMINGS=0;
+static bool DETAILED_TIMINGS=1;
 
-//#define DEBUG
+#define DEBUG
 //#define PRINT_INPUTS
 //#define PRINT_BIN_CONTENT
 //#define PRINT_OPRG_MASKS

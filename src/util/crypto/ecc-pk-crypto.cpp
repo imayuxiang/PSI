@@ -21,7 +21,12 @@ char *ecy233 = (char *) "1db537dece819b7f70f555a67c427a8cd9bf18aeb9b56e0c11056fa
 char *ecx283 = (char *) "503213f78ca44883f1a3b8162f188e553cd265f23c1567a16876913b0c2ac2458492836";
 char *ecy283 = (char *) "1ccda380f1c9e318d90f95d07e5426fe87e45c0e8184698e45962364e34116177dd2259";
 
-
+namespace std{
+	template<typename T, typename... Ts>
+	std::unique_ptr<T> make_unique(Ts&&... params){
+    		return std::unique_ptr<T>(new T(std::forward<Ts>(params)...));
+	}
+}
 
 void ecc_field::init(seclvl sp, uint8_t* seed) {
 

@@ -112,6 +112,7 @@ public:
 	uint32_t get_hash_bytes();
 
 	void gen_common_seed(prf_state_ctx* aes_key, CSocket& sock);
+	void gen_common_seed(prf_state_ctx* prf_state, uint8_t* seed_buf, uint8_t* seed_rcv_buf);
 	void init_prf_state(prf_state_ctx* prf_state, uint8_t* seed);
 
 private:

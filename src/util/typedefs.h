@@ -57,7 +57,7 @@ typedef uint32_t REGISTER_SIZE;
 
 #elif (MAX_INT == 0xFFFFFFFFFFFFFFFF)
 #define MACHINE_SIZE_64
-typedef unsigned long int REGISTER_SIZE;
+typedef unsigned long long REGISTER_SIZE;
 
 #else
 #define MACHINE_SIZE_16
